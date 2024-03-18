@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  productSlice  from './slices/ProductSlice'
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    proudctSlice:productSlice
-  }
+    allproductInfo : productSlice
+  },
 })

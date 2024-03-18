@@ -15,14 +15,18 @@ import { TfiReload } from "react-icons/tfi";
 import { FaCartShopping } from "react-icons/fa6";
 import { createContext } from "react";
 
-import { useDispatch } from "react-redux";
-import { filterProduct } from "../slices/ProductSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector , useDispatch } from "react-redux";
+import { Allproducts } from "../slices/ProductSlice";
+
 
 let ProductFilterContext = createContext();
 const Header = ({ children }) => {
+  let dispatch = useDispatch()
+
+  let data = useSelector((state)=>state.allproductInfo.product)
+
   let navigate = useNavigate();
-  let dispatch = useDispatch();
   let [products, setProducts] = useState([]);
   let [filterProducsData, setFilterProductsData] = useState([]);
   const dropDownRef = useRef();
@@ -70,7 +74,7 @@ const Header = ({ children }) => {
         item.title.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setFilterProductsData(filterproduct);
-      dispatch(filterProduct(filterproduct));
+
     }
   };
 
