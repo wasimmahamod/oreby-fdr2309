@@ -28,8 +28,19 @@ export const productSlice = createSlice({
       state.product.splice(action.payload.id, 1);
       localStorage.setItem("productCart", JSON.stringify(state.product));
     },
+    quntityUpdate: (state, action) => {
+      console.log(action.payload);
+      if (action.payload.act == "pl") {
+        state.product[action.payload.id].qun++;
+        localStorage.setItem("productCart", JSON.stringify(state.product));
+      } else {
+        state.product[action.payload.id].qun--;
+        localStorage.setItem("productCart", JSON.stringify(state.product));
+      }
+    },
   },
 });
-export const { Allproducts, removeProduct } = productSlice.actions;
+export const { Allproducts, removeProduct, quntityUpdate } =
+  productSlice.actions;
 
 export default productSlice.reducer;

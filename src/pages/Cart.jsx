@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../components/Container";
 import Flex from "../components/Flex";
 import { FaTimes } from "react-icons/fa";
 import Imege from "../components/Imege";
 import Breadcrums from "../components/Breadcrums";
 import { useSelector, useDispatch } from "react-redux";
-import { removeProduct } from "../slices/ProductSlice";
+import { quntityUpdate, removeProduct } from "../slices/ProductSlice";
 
 const Cart = ({ title }) => {
+  let [qun, setQun] = useState(0);
+  let [totallprice, setTotallPrice] = useState(0);
   let dispatch = useDispatch();
   let product = useSelector((state) => state.allproductInfo.product);
 
   let handleRemoveProudct = (item) => {
     dispatch(removeProduct(item.id));
   };
+
+  let handleproductDecress = (item) => {
+    dispatch(quntityUpdate({ id: item, qun, act: "mn" }));
+  };
+  let handleproductIncress = (item) => {
+    dispatch(quntityUpdate({ id: item, qun, act: "pl" }));
+  };
+
   return (
     <section>
       <Container>
@@ -46,51 +56,60 @@ const Cart = ({ title }) => {
           {/* cart header end */}
 
           {/* products section start */}
-          {product.map((item) => (
-            <Flex className="border-[1px] border-[#F0F0F0] py-[30px] px-5 flex-wrap">
-              <div className="w-1/4">
-                <Flex className={`items-center gap-10`}>
-                  <FaTimes onClick={() => handleRemoveProudct(item)} />
-                  <Flex className={`items-center gap-5`}>
-                    <Imege
-                      className={`w-[100px] h-[100px]`}
-                      src={item.thumbnail}
-                    />
-                    <h3 className=" font-dm font-bold text-[16px] text-primary">
-                      {item.title}
-                    </h3>
+          {product.map((item, index) => {
+            totallprice += item.price * item.qun;
+            return (
+              <Flex className="border-[1px] border-[#F0F0F0] py-[30px] px-5 flex-wrap">
+                <div className="w-1/4">
+                  <Flex className={`items-center gap-10`}>
+                    <FaTimes onClick={() => handleRemoveProudct(item)} />
+                    <Flex className={`items-center gap-5`}>
+                      <Imege
+                        className={`w-[100px] h-[100px]`}
+                        src={item.thumbnail}
+                      />
+                      <h3 className=" font-dm font-bold text-[16px] text-primary">
+                        {item.title}
+                      </h3>
+                    </Flex>
+                  </Flex>
+                </div>
+
+                <Flex className="w-1/4 items-center">
+                  <h3 className=" font-dm font-bold text-[20px] text-primary">
+                    $ {item.price}
+                  </h3>
+                </Flex>
+
+                <Flex className={`w-1/4 items-center`}>
+                  <Flex className={`border-[1px] border-[#F0F0F0]`}>
+                    <button
+                      onClick={() => handleproductDecress(index)}
+                      className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]"
+                    >
+                      {" "}
+                      -{" "}
+                    </button>
+                    <button className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]">
+                      {item.qun}
+                    </button>
+                    <button
+                      onClick={() => handleproductIncress(index)}
+                      className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]"
+                    >
+                      +
+                    </button>
                   </Flex>
                 </Flex>
-              </div>
 
-              <Flex className="w-1/4 items-center">
-                <h3 className=" font-dm font-bold text-[20px] text-primary">
-                  $ {item.price}
-                </h3>
-              </Flex>
-
-              <Flex className={`w-1/4 items-center`}>
-                <Flex className={`border-[1px] border-[#F0F0F0]`}>
-                  <button className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]">
-                    {" "}
-                    -{" "}
-                  </button>
-                  <button className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]">
-                    {item.qun}
-                  </button>
-                  <button className=" font-dm font-normal text-[16px] leading-[30px] text-secondary py-[3px] px-[21px]">
-                    +
-                  </button>
+                <Flex className="w-1/4 items-center">
+                  <h3 className=" font-dm font-bold text-[20px] text-primary">
+                    ${item.price * item.qun}
+                  </h3>
                 </Flex>
               </Flex>
-
-              <Flex className="w-1/4 items-center">
-                <h3 className=" font-dm font-bold text-[20px] text-primary">
-                  ${item.price}
-                </h3>
-              </Flex>
-            </Flex>
-          ))}
+            );
+          })}
           {/* products section end */}
 
           {/* sise, coupon section start */}
@@ -141,7 +160,7 @@ const Cart = ({ title }) => {
                   Total
                 </p>
                 <p className="w-1/2 border-[1px] border-[#F0F0F0] py-4 px-5 font-dm font-normal text-[16px] text-secondary">
-                  389.99 $
+                  ${totallprice}
                 </p>
               </Flex>
             </div>
