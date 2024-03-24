@@ -3,8 +3,11 @@ import Container from "../components/Container";
 import { Link } from "react-router-dom";
 import Flex from "../components/Flex";
 import Breadcrums from "../components/Breadcrums";
+import { useLocation } from "react-router-dom";
 
 const Checkout = ({ title }) => {
+  let location = useLocation();
+
   return (
     <section>
       <Container>
@@ -252,7 +255,7 @@ const Checkout = ({ title }) => {
                   Subtotal
                 </p>
                 <p className="w-1/2 border-[1px] border-[#F0F0F0] py-4 px-5 font-dm font-normal text-[16px] text-secondary">
-                  389.99 $
+                  ${location.state.totallprice}
                 </p>
               </Flex>
               <Flex>
@@ -260,7 +263,7 @@ const Checkout = ({ title }) => {
                   Total
                 </p>
                 <p className="w-1/2 border-[1px] border-[#F0F0F0] py-4 px-5 font-dm font-normal text-[16px] text-secondary">
-                  389.99 $
+                  ${location.state.totallprice}
                 </p>
               </Flex>
             </div>

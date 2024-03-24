@@ -4,7 +4,7 @@ import Flex from "./Flex";
 import ItemCard from "./ItemCard";
 const PaginationForGrid = ({ itemsPerPage, products, filterProduct }) => {
   // Example items, to simulate fetching from another resources.
-  const items = products;
+  const items = filterProduct.length > 0 ? filterProduct : products;
 
   console.log(filterProduct);
   function Items({ currentItems }) {

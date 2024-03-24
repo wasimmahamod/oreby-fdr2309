@@ -6,8 +6,10 @@ import Imege from "../components/Imege";
 import Breadcrums from "../components/Breadcrums";
 import { useSelector, useDispatch } from "react-redux";
 import { quntityUpdate, removeProduct } from "../slices/ProductSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ title }) => {
+  let navigate = useNavigate();
   let [qun, setQun] = useState(0);
   let [totallprice, setTotallPrice] = useState(0);
   let dispatch = useDispatch();
@@ -24,6 +26,9 @@ const Cart = ({ title }) => {
     dispatch(quntityUpdate({ id: item, qun, act: "pl" }));
   };
 
+  let handleCheckout = () => {
+    navigate("/checkout", { state: { totallprice: totallprice } });
+  };
   return (
     <section>
       <Container>
@@ -152,7 +157,7 @@ const Cart = ({ title }) => {
                   Subtotal
                 </p>
                 <p className="w-1/2 border-[1px] border-[#F0F0F0] py-4 px-5 font-dm font-normal text-[16px] text-secondary">
-                  389.99 $
+                  ${totallprice}
                 </p>
               </Flex>
               <Flex>
@@ -165,7 +170,10 @@ const Cart = ({ title }) => {
               </Flex>
             </div>
 
-            <button className=" font-dm font-bold text-[14px] text-white bg-primary py-4 px-8 ms-auto mt-[30px] block">
+            <button
+              onClick={handleCheckout}
+              className=" font-dm font-bold text-[14px] text-white bg-primary py-4 px-8 ms-auto mt-[30px] block"
+            >
               Proceed to Checkout
             </button>
           </div>

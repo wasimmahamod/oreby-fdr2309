@@ -54,6 +54,13 @@ const Shop = ({ title }) => {
               </h2>
 
               <List>
+                <ShopByCatagory
+                  onClick={handleCategoryFilter}
+                  categoryShow={false}
+                  cat={"All products"}
+                />
+              </List>
+              <List>
                 {productsFilter.map((item) => (
                   <ShopByCatagory
                     onClick={handleCategoryFilter}

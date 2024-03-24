@@ -10,18 +10,21 @@ import { Allproducts } from "../slices/ProductSlice";
 import { useNavigate } from "react-router-dom";
 
 const ItemCard = ({ item, className }) => {
-  let navigate = useNavigate()
-  let dispatch = useDispatch()
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
 
-  let handleCart=()=>{
-    dispatch(Allproducts('asdfhasdkfjasdf'))
-  }
+  let handleCart = () => {
+    dispatch(Allproducts("asdfhasdkfjasdf"));
+  };
 
-  let handleSingleProudct=(id)=>{
-    navigate(`/singleproduct/${id}`)
-  }
+  let handleSingleProudct = (id) => {
+    navigate(`/singleproduct/${id}`);
+  };
   return (
-    <div onClick={()=>handleSingleProudct(item.id)} className={`w-auto md:w-[350px] lg:w-[370px] group ${className}`}>
+    <div
+      onClick={() => handleSingleProudct(item.id)}
+      className={`w-auto md:w-[350px] lg:w-[370px] group ${className}`}
+    >
       <div className=" relative overflow-hidden w-full">
         <Imege
           src={item.thumbnail}
@@ -41,7 +44,8 @@ const ItemCard = ({ item, className }) => {
           >
             Compare <TfiReload className="text-primary font-bold font-dm" />
           </a>
-          <Link onClick={handleCart}
+          <Link
+            onClick={handleCart}
             href=""
             className=" font-dm font-normal text-[16px] text-secondary flex items-center gap-[15px] hover:font-bold hover:text-primary"
           >
